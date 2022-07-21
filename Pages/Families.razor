@@ -1,0 +1,45 @@
+﻿@page "/Families"
+@using Microsoft.AspNetCore.Identity
+
+<PageTitle>Families</PageTitle>
+
+@using HomeBudget.Data
+@using System.Net
+@inject FamilyService FamilyService
+
+<h1>Families</h1>
+
+@if(families.Count() > 0)
+{
+    foreach(var f in families)
+    {
+        <p>f.Family.FamilyName</p>
+    }
+}
+else
+{
+    <p>It looks like you are not part of any family. Create a family to get started. </p>
+}
+
+@code { 
+    [CascadingParameter]
+    private Task<AuthenticationState> authenticationStateTask { get; set; }
+
+    [Inject]
+    public NavigationManager NavigationManager { get; set; }
+
+    private List<FamilyUser>? families;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authenticationState = await authenticationStateTask;
+
+        if (!authenticationState.User.Identity.IsAuthenticated)
+        {
+            string returnUrl = WebUtility.UrlEncode($"/Families");
+            NavigationManager.NavigateTo($"/Identity/Account/Login?returnUrl={returnUrl}");
+        }
+
+        families = await FamilyService.GetFamiliesAsync();
+    }
+}
