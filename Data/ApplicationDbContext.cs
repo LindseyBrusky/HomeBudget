@@ -9,5 +9,8 @@ namespace HomeBudget.Data
             : base(options)
         {
         }
+
+        public DbSet<Family> Families { get; set; }
+        public DbSet<FamilyUser> FamilyUsers { get; set; }
     }
 }

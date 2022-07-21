@@ -14,5 +14,7 @@ namespace HomeBudget.Data
 
         [StringLength(450)]
         public string? Admin { get; set; }
+
+        public ICollection<FamilyUser> FamilyUsers { get; set; }
     }
 }
