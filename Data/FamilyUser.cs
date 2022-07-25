@@ -14,6 +14,6 @@ namespace HomeBudget.Data
         [StringLength(450)]
         public string UserId { get; set; }
 
-        public Family Family { get; set; }
+        public virtual Family Family { get; set; }
     }
 }
