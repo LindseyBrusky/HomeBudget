@@ -13,7 +13,7 @@
 {
     foreach(var f in families)
     {
-        <p>f.Family.FamilyName</p>
+        <p>@f.FamilyName</p>
     }
 }
 else
@@ -21,14 +21,22 @@ else
     <p>It looks like you are not part of any family. Create a family to get started. </p>
 }
 
-@code { 
+<hr />
+
+Family Name: <input type="text" @bind="FamilyName" />
+
+<p><input type="button" value="Create New Family" @onclick="AddFamily" /></p>
+
+@code {
     [CascadingParameter]
     private Task<AuthenticationState> authenticationStateTask { get; set; }
 
     [Inject]
     public NavigationManager NavigationManager { get; set; }
 
-    private List<FamilyUser>? families;
+    private List<Family>? families;
+
+    public string FamilyName;
 
     protected override async Task OnInitializedAsync()
     {
@@ -41,5 +49,10 @@ else
         }
 
         families = await FamilyService.GetFamiliesAsync();
+    }
+
+    private async Task AddFamily()
+    {
+        families = await FamilyService.CreateFamilyAsync(FamilyName);
     }
 }
