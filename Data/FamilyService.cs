@@ -19,10 +19,6 @@ namespace HomeBudget.Data
         {
             var userId = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            //List<FamilyUser> familyUsers = _context.FamilyUsers
-            //    .Include(s => s.Family)
-
-
             List<int> families = _context.FamilyUsers
                 .Where(fu => fu.UserId == userId)
                 .Select(fu => fu.FamilyId)

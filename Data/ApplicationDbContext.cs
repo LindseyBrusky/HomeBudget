@@ -10,6 +10,8 @@ namespace HomeBudget.Data
         {
         }
         public DbSet<AppUser> AppUsers { get; set; }
+        public DbSet<BankAccount> BankAccounts { get; set; }
+        public DbSet<BudgetItems> BudgetItems { get; set; }
         public DbSet<Family> Families { get; set; }
         public DbSet<FamilyUser> FamilyUsers { get; set; }
     }

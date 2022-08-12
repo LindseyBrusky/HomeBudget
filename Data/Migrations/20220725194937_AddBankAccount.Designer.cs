@@ -4,6 +4,7 @@ using HomeBudget.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HomeBudget.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220725194937_AddBankAccount")]
+    partial class AddBankAccount
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -62,39 +64,6 @@ namespace HomeBudget.Data.Migrations
                     b.HasIndex("FamilyId");
 
                     b.ToTable("BankAccounts");
-                });
-
-            modelBuilder.Entity("HomeBudget.Data.BudgetItems", b =>
-                {
-                    b.Property<int>("BudgetItemId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BudgetItemId"), 1L, 1);
-
-                    b.Property<decimal?>("Amount")
-                        .HasColumnType("money");
-
-                    b.Property<int>("BankAccountId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("DayOfWeek")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ItemName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ItemType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("Nth")
-                        .HasColumnType("int");
-
-                    b.HasKey("BudgetItemId");
-
-                    b.HasIndex("BankAccountId");
-
-                    b.ToTable("BudgetItems");
                 });
 
             modelBuilder.Entity("HomeBudget.Data.Family", b =>
@@ -361,17 +330,6 @@ namespace HomeBudget.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Family");
-                });
-
-            modelBuilder.Entity("HomeBudget.Data.BudgetItems", b =>
-                {
-                    b.HasOne("HomeBudget.Data.BankAccount", "BankAccount")
-                        .WithMany()
-                        .HasForeignKey("BankAccountId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("BankAccount");
                 });
 
             modelBuilder.Entity("HomeBudget.Data.FamilyUser", b =>
